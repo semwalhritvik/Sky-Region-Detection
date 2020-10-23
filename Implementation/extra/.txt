@@ -1,0 +1,45 @@
+import cv2
+import numpy as np
+from cv2 import imshow, waitKey, destroyAllWindows, namedWindow, imwrite, VideoCapture
+from PIL import ImageTk, Image
+cam = VideoCapture(0)
+
+img_counter = int(0)
+while True:
+    ret, frame = cam.read()
+    imshow("test", frame)
+    if not ret:
+        break
+    k = waitKey(1)
+
+    if k % 256 == 27:
+        # ESC pressed
+        print("Escape hit, closing...")
+        break
+    elif k % 256 == 32:
+        # SPACE pressed
+        img_name = "img1.jpg".format(img_counter)
+        imwrite(img_name, frame)
+        print("{} written!".format(img_name))
+        break
+        img_counter += 1
+
+cam.release()
+
+destroyAllWindows()
+
+
+img = cv2.imread("C:/Users/Prayag/PycharmProjects/SIH2020/img1.jpg")
+#cv2.imshow("Original", img)
+grey = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY).astype(float)
+#cv2.imshow("GreyScale Image", grey)
+cv2.imwrite("C:/Users/Prayag/PycharmProjects/SIH2020/img2.png", grey)
+edge_x = cv2.Sobel(grey,cv2.CV_64F,1,0,ksize=3)
+cv2.imwrite("C:/Users/Prayag/PycharmProjects/SIH2020/x.png", edge_x)
+edge_y = cv2.Sobel(grey,cv2.CV_64F,0,1,ksize=3)
+cv2.imwrite("C:/Users/Prayag/PycharmProjects/SIH2020/y.png", edge_y)
+edge = np.sqrt(edge_x**2 + edge_y**2)
+cv2.imwrite("C:/Users/Prayag/PycharmProjects/SIH2020/sobel_final.png", edge)
+
+
+

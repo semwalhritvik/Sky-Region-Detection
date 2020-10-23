@@ -1,0 +1,39 @@
+import PIL
+from PIL import Image
+from PIL import ImageEnhance
+
+def adjust_sharpness(input_image, output_image, factor):
+    image = Image.open(input_image)
+    enhancer_object = ImageEnhance.Sharpness(image)
+    out = enhancer_object.enhance(factor)
+    out.save(output_image)
+
+if __name__ == '__main__':
+    adjust_sharpness('lena.png', 'lena1.png',  0.5)
+
+def adjust_color(input_image, output_image, factor):
+    image = Image.open(input_image)
+    enhancer_object = ImageEnhance.Color(image)
+    out = enhancer_object.enhance(factor)
+    out.save(output_image)
+
+if __name__ == '__main__':
+    adjust_color('lena1.png', 'lena2.png',  0.1)
+
+def adjust_contrast(input_image, output_image, factor):
+    image = Image.open(input_image)
+    enhancer_object = ImageEnhance.Contrast(image)
+    out = enhancer_object.enhance(factor)
+    out.save(output_image)
+
+if __name__ == '__main__':
+    adjust_contrast('lena2.png', 'lena3.png',  0.8)
+
+def adjust_light(input_image, output_image, factor):
+    image = Image.open(input_image)
+    enhancer_object = ImageEnhance.Brightness(image)
+    out = enhancer_object.enhance(factor)
+    out.save(output_image)
+
+if __name__ == '__main__':
+    adjust_light('lena3.png', 'lena4.png',  1.4)
